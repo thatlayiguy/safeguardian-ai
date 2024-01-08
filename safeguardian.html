@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SafeGuardian AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/x-icon" href="logo.png" />
+
+<style>
+    .row > .column {
+    padding: 0 8px;
+    }
+
+    .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+
+    /* Create four equal columns that floats next to eachother */
+    .column {
+    float: left;
+    width: 25%;
+    display: none;
+    }
+
+    /* The Modal (background) */
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    opacity: 0.8;
+    }
+
+    /* Modal Content */
+    .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    width: 90%;
+    max-width: 1200px;
+    opacity: 10;
+    }
+
+    /* The Close Button */
+    .close {
+    color: white;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 35px;
+    font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+    color: #999;
+    text-decoration: none;
+    cursor: pointer;
+    }
+
+    /* Hide the slides by default */
+    .mySlides {
+    display: none;
+    }
+
+    /* Next & previous buttons */
+    .prev,
+    .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+    }
+
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover,
+    .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Number text (1/3 etc) */
+    .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+    }
+
+    /* Caption text */
+    .caption-container {
+    text-align: center;
+    background-color: black;
+    padding: 2px 16px;
+    color: white;
+    display: none;
+    }
+
+    .demo {
+        display: none;
+    }
+
+    img.demo {
+    opacity: 0.6;
+    }
+
+    .active,
+    .demo:hover {
+    opacity: 1;
+    }
+
+    img.hover-shadow {
+    transition: 0.3s;
+    }
+
+    .hover-shadow:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .block {
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #066cb0;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+    }
+
+    .block:hover {background-color: #066cb0}
+
+    .block:active {
+    background-color: #066cb0;
+    box-shadow: 0 5px #ffffff;
+    transform: translateY(4px);
+    }
+
+    .flip-card {
+    background-color: transparent;
+    width: 300px;
+    height: 200px;
+    border: 0px solid #f1f1f1;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    }
+
+    /* This container is needed to position the front and back side */
+    .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    }
+
+    /* Do an horizontal flip when you move the mouse over the flip box container */
+    .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+    }
+
+    /* Position the front and back side */
+    .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+    }
+
+    /* Style the front side (fallback if image is missing) */
+    .flip-card-front {
+    background-color: #bbb;
+    color: black;
+    }
+
+    /* Style the back side */
+    .flip-card-back {
+    background-color: dodgerblue;
+    color: white;
+    transform: rotateY(180deg);
+    }
+
+    /* Lightbox Caption */
+    .bottom-left {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+    color: white;
+    }
+
+
+    .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+    margin: auto;
+    text-align: center;
+    margin-left: 1000px;
+    }
+
+    .title {
+    color: rgb(246, 246, 246);
+    font-size: 18px;
+    }
+
+    .contactme {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    }
+
+    .link {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+    }
+
+    button:hover, a:hover {
+    opacity: 0.7;
+    }
+
+    .background {
+  background-image: url('background2.jpg'); /* Replace 'background.jpg' with the path to your background image */
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+</style>
+
+</head>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+    <a href="#home" class="w3-bar-item w3-button"> SafeGuardian <b> AI</b> </a>
+    <!-- Float links to the right. Hide them on small screens -->
+    <div class="w3-right w3-hide-small">
+      <a href="#projects" class="w3-bar-item w3-button">Project</a>
+      <a href="https://safeguardianai.streamlit.app/" class="w3-bar-item w3-button">Web App</a>
+      <a href="#about" class="w3-bar-item w3-button">About Me</a>
+      <a href="#contact" class="w3-bar-item w3-button">What's Next</a>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
+  <img class="w3-image" src="background.jpg" alt="Background" width="1500" height="800">
+  <div class="w3-display-middle w3-margin-top w3-center">
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-hide-small w3-text-light-grey">SafeGuardian</span><span class="w3-padding w3-black w3-opacity-min"><b>AI</b></span></h1>
+  </div>
+</header>
+
+<!-- Page content -->
+<div class="w3-content w3-padding" style="max-width:1564px">
+
+  <!-- Random Stats -->
+  <div class="w3-container w3-padding-32">
+    
+    <!-- Images used to open the lightbox -->
+  <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Overview - <em>Click on the Image Below to see a Slideshow!</em></h3>
+</br>
+  <div class="row">
+    <div style="display: flex;">
+      <img src="cybercrimewordmap2.jpg" onclick="openModal();currentSlide(1)" class="hover-shadow" style= "width:700px">
+      <h3>
+        <p style="padding-left: 18px;";>Email and SMS scams, otherwise called <b><em>phishing</em></b> and <b><em>smishing</em></b> respectively, are a form of cybercrime that involves sending 
+        fraudulent messages to trick recipients into revealing sensitive information or installing malware. They are one of the most
+        common and costly cyber threats, affecting individuals, businesses and organizations because they are easy, cheap, and effective for cybercriminals to use. However, there is usually more 
+        awareness about phishing as opposed to smishing. This is the reason you are probably hearing "smishing" for the first time :)  
+        </p>
+    </h3>
+    </div>
+  </div>
+  
+  <!-- The Modal/Lightbox -->
+  <div id="myModal" class="modal">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+  
+      <div class="mySlides">
+        <div class="numbertext">1 / 8</div>
+        <img src="smishing1.png" style="width:100%"; height="600px";>
+      </div>
+  
+      <div class="mySlides">
+        <div class="numbertext">2 / 8</div>
+        <img src="smishing6.png" style="width:100%"; height="600px">
+      </div>
+  
+      <div class="mySlides">
+        <div class="numbertext">3 / 8</div>
+        <img src="smishing2.png" style="width:100%"; height="600px%">
+      </div>
+  
+      <div class="mySlides">
+        <div class="numbertext">4 / 8</div>
+        <img src="smishing3.png" style="width:100%"; height="600px">
+      </div>
+
+      <div class="mySlides">
+        <div class="numbertext">5 / 8</div>
+        <img src="smishing5.png" style="width:100%"; height="600px">
+      </div>
+
+      <div class="mySlides">
+        <div class="numbertext">6 / 8</div>
+        <img src="smishing4.png" style="width:100%"; height="600px">
+      </div> 
+
+      <div class="mySlides">
+        <div class="numbertext">7 / 8</div>
+        <img src="smishing7.png" style="width:100%"; height="600px">
+      </div>
+
+      <div class="mySlides">
+        <div class="numbertext">8 / 8</div>
+        <img src="smishing8.png" style="width:100%"; height="600px">
+      </div>
+  
+      <div class="bottom-left">Source: <a href="https://www.safetydetectives.com/blog/what-is-smishing-sms-phishing-facts/" style="text-decoration: none;">Safety Detectives</a></div>
+
+      <!-- Next/previous controls -->
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  
+      <!-- Caption text -->
+      <div class="caption-container">
+        <p id="caption"></p>
+      </div>
+  
+      <!-- Thumbnail image controls -->
+      <div class="column">
+        <img class="demo" src="smishing1.png" onclick="currentSlide(1)" alt="Nature" style="width:75%">
+      </div>
+  
+      <div class="column">
+        <img class="demo" src="smishing6.png" onclick="currentSlide(2)" alt="Snow" style="width:75%">
+      </div>
+  
+      <div class="column">
+        <img class="demo" src="smishing2.png" onclick="currentSlide(3)" alt="Mountains" style="width:75%">
+      </div>
+  
+      <div class="column">
+        <img class="demo" src="smishing3.png" onclick="currentSlide(4)" alt="Lights" style="width:75%">
+      </div> 
+
+      <div class="column">
+        <img class="demo" src="smishing5.png" onclick="currentSlide(5)" alt="Lights" style="width:75%">
+      </div>
+
+      <div class="column">
+        <img class="demo" src="smishing4.png" onclick="currentSlide(6)" alt="Lights" style="width:75%">
+      </div> 
+
+      <div class="column">
+        <img class="demo" src="smishing7.png" onclick="currentSlide(7)" alt="Lights" style="width:75%">
+      </div> 
+
+      <div class="column">
+        <img class="demo" src="smishing8.png" onclick="currentSlide(8)" alt="Lights" style="width:75%">
+      </div> 
+    </div>
+  </div>
+  </div>
+  
+  <!-- Project Section -->
+  <div class="w3-container w3-padding-32" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Project</h3>
+  </div>
+
+  <div style="display: flex;">
+    <div style="width: 50%;">
+      <p style="padding-right: 20px; padding-left: 15px; font-size: 17.2px;";>The purpose of my project is to raise awareness to and also help contribute to combating cybercrime 
+        specifically phishing and smishing. <b>SafeGuardian AI</b> is a Machine Learning Model trained on a <a href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection" style="text-decoration: none;"><b>dataset</b></a>
+        of about six thousand messages to identify and detect scam content in emails and text messages. Currently, the model can detect scam content accurately in text messages. However, while it can detect scam content
+        in emails to some level of accuracy, the dataset on which the model is trained does not natively contain enough of emails. Therefore, the model still needs to undergo further training with an email based dataset. 
+        For now, the model can be accessed from a <a href="https://safeguardianai.streamlit.app/" style="text-decoration: none;"><b>Web App</b></a>. Feel free to try it out!
+          <a onclick="window.location.href='https://safeguardianai.streamlit.app/';"><button type="button" class="block"><strong>Visit Web App </strong></button></a>
+          <a onclick="window.location.href='https://github.com/thatlayiguy/email-sms-scam-detector';"><button type="button" class="block"><strong>View Project Repository on GitHub</strong></button></a>
+      </p></div>
+      <div class="flip-card" style="padding-left: 20px;">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="webapp.png" alt="Web app" style= "width:700px">
+          </div>
+          <div class="flip-card-back">
+            <img src="webapp2.png" alt="Web app" style= "width:700px">
+          </div>
+        </div>
+      </div>      
+  </div>
+
+
+  <!-- About Me Section -->
+  <div class="w3-container w3-padding-32" id="about">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">About Me</h3>
+  </div>
+  <div class="background">
+    <div class="card">
+        <img src="aboutme.jpg" alt="John" style="width:250px; height: 300px;">
+        <h2>Simeon Larinde</h2>
+        <p class="title">Cyberscurity & AI/ML Enthusiast</p>
+        <a href="mailto:simeon.larinde@uri.edu"class="links"><i class="fa fa-paper-plane"></i></a>
+        <a href="https://www.linkedin.com/in/simeon-larinde/"class="links"><i class="fa fa-linkedin"></i></a>
+        <p><button onclick="window.location.href='#contact'" class="contactme">Contact</button></p>
+    </div>
+</div>
+
+
+  <!-- Contact Section -->
+  <div class="w3-container w3-padding-32" id="contact">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">What's Next</h3>
+    <p>Have questions or interested on working together? Lets get in touch!</p>
+    <form id="contact-form" action="/email" target="_blank" enctype="multipart/form-data">
+      <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+      <input class="w3-input w3-section w3-border" type="text" placeholder="Email" required name="Email">
+      <input class="w3-input w3-section w3-border" type="text" placeholder="Subject" required name="Subject">
+      <input class="w3-input w3-section w3-border" type="text" placeholder="Comment" required name="Comment">
+      <input type="file" name="attachment" style="padding-right: 943px;">
+      <button class="w3-button w3-black w3-section" type="submit">
+        <i class="fa fa-paper-plane"></i> SEND MESSAGE
+      </button>
+    </form>
+  </div>
+  
+<!-- Image of cybercrime wordmap -->
+<div class="w3-container">
+  <img src="cybercrimewordmap.jpg" class="w3-image" style="width:100%">
+</div>
+
+<!-- End page content -->
+</div>
+
+
+<!-- Footer -->
+<footer class="w3-center w3-light-grey w3-padding-16">
+  <p>Copyright <span>&copy; 2023 <a href="safeguardian.html" style="text-decoration: none;"><b>SafeGuardian AI</b></a></span></p>
+</footer>
+
+<script>
+    // Open the Modal
+    function openModal() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    // Close the Modal
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        var captionText = document.getElementById("caption");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].alt;
+    }
+
+    // Automatic slideshow every 5 seconds
+    setInterval(function () {
+        plusSlides(1);
+    }, 5000);
+
+
+
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    var nameInput = document.getElementById('name').value.trim();
+    var emailInput = document.getElementById('email').value.trim();
+    var messageInput = document.getElementById('message').value.trim();
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex pattern
+
+    if (nameInput === '') {
+        alert('Please enter your name.');
+        event.preventDefault();
+    } else if (!emailPattern.test(emailInput)) {
+        alert('Please enter a valid email address.');
+        event.preventDefault();
+    } else if (messageInput === '') {
+        alert('Please enter your message.');
+        event.preventDefault();
+    }
+});
+
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var formData = new FormData(this);
+    var actionUrl = this.getAttribute('action'); // Dynamically get the action URL
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', actionUrl, true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            alert('Email sent successfully!');
+        } else {
+            alert('An error occurred while sending the email.');
+        }
+    };
+    xhr.send(formData);
+});
+
+</script>
+
+
+</body>
+</html>
